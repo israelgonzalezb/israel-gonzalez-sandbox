@@ -37,12 +37,12 @@ const generateNames = async () => {
  
 
   const corsUrl = process.env.CORS_URL;
-  const wikiFirstNameUrl = `https://en.wikipedia.org/w/api.php?action=query&list=categorymembers&cmtitle=Category:Given_names&cmtype=page&cmnamespace=0&format=json&cmlimit=1&cmprop=title|sortkey&cmstartsortkeyprefix=dft`;
-  const wikiLastNameUrl = `https://en.wikipedia.org/w/api.php?action=query&list=categorymembers&cmtitle=Category:Given_names&cmtype=page&cmnamespace=0&format=json&cmlimit=1&cmprop=title|sortkey&cmstartsortkeyprefix=dft`;
+  const wikiFirstNameUrl = `https://en.wikipedia.org/w/api.php?action=query&list=categorymembers&cmtitle=Category:Given_names&cmtype=page&cmnamespace=0&format=json&cmlimit=1&cmprop=title|sortkey&cmstartsortkeyprefix=`;
+  const wikiLastNameUrl = `https://en.wikipedia.org/w/api.php?action=query&list=categorymembers&cmtitle=Category:Given_names&cmtype=page&cmnamespace=0&format=json&cmlimit=1&cmprop=title|sortkey&cmstartsortkeyprefix=`;
 
 
   let wikiResponses = await Promise.allSettled(stringArr.splice(0,20).map(sortStart => fetch(
-    `${corsUrl}${wikiFirstNameUrl}&cmsortkeyprefix=${sortStart}`
+    `${corsUrl}${wikiFirstNameUrl}${sortStart.join("")}`
   ).then((res) => console.log(res.json()))));
   return wikiResponses;
 
