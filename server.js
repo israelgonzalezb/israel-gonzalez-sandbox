@@ -49,7 +49,7 @@ const generateNames = async () => {
 }
 
 if (!fs.existsSync("./customers.json")) {
-    console.log(Promise.resolve(generateNames()))
+    generateNames().then(res => console.log(res))
 }
 
 // Sync prevents the app from serving index early
