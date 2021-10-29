@@ -43,8 +43,8 @@ const generateNames = async () => {
 
   let wikiResponses = await Promise.allSettled(stringArr.splice(0,20).map(sortStart => fetch(
     `${corsUrl}${wikiFirstNameUrl}${sortStart.join("")}`
-  ).then((res) => res)));
- console.log(await wikiResponses[0]);
+  ).then((res) => res.json()).catch(err => console.log("!!!", err)));
+ console.log(await wikiResponses[0].query);
 
 }
 
