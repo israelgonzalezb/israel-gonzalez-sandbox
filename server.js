@@ -50,11 +50,7 @@ const generateNames = async () => {
 }
 
 if (!fs.existsSync("./customers.json")) {
-    console.log(generateNames())
-
-).then((res) => res.text()) 
-
- 
+    console.log(generateNames()) 
 
 }
 
