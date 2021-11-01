@@ -1,0 +1,12 @@
+{
+  "env": {
+    "DWOLLA_KEY": {
+      "description": "https://dashboard-sandbox.dwolla.com/applications-legacy",
+      "generator": "secret"
+    },
+    "DWOLLA_SECRET": {
+      "description": "https://dashboard-sandbox.dwolla.com/applications-legacy",
+      "generator": "secret"
+    }
+  }
+}
