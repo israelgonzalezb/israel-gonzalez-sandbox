@@ -20,5 +20,5 @@ This is a simple express app that serves an HTML page to search Dwolla customers
 
 The server runs on port 3000 by default. Change that by setting the PORT environment variable.
 
-On first visit to `/`, the server will create 20 fake customers. To manually run the user creation script, visit `/create`. The server then redirects you to the index page.
+On first visit to `/`, the server will create 20 fake customers. To manually run the user creation script, visit `/create`. The script results will be logged to the server's console. The server then redirects you to the index page.
 
