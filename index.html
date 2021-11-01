@@ -1,23 +1,48 @@
 <html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Dwolla API Sandbox Example</title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1/new.min.css">
-        <link rel="stylesheet" href="https://fonts.xz.style/serve/inter.css">
-    </head>
-    <body>
-        <header><h3>An example JS app using the /customers endpoint of Dwolla's API Sandbox</h3></header>
-        <div>
-            <form>
-                <p>
-                    <label>Customer search</label><br>
-                    <input type="text" name="search"/>
-                </p>
-                    <p>
-                        <button type="submit">Search</button>
-                    </p>
-                
-            </form>
-        </div>
-    </body>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dwolla API Sandbox Example</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1/new.min.css"
+    />
+    <link rel="stylesheet" href="https://fonts.xz.style/serve/inter.css" />
+    <script type="text/javascript">
+      const search = async (term) =>
+        await fetch(`http://localhost:3000/search/${term}`);
+
+      window.onload = function () {
+        var formEl = document.getElementById('form');
+        var searchEl = document.getElementById('search');
+        const responseEl = document.getElementById('response');
+        form.addEventListener('submit', async function (e) {
+          e.preventDefault();
+          search(searchEl.value).then(
+            async (res) => (responseEl.innerText = await res.text())
+          );
+        });
+      };
+    </script>
+  </head>
+  <body>
+    <header>
+      <h3>
+        An example JS app using the /customers endpoint of Dwolla's API Sandbox
+      </h3>
+    </header>
+    <div>
+      <form id="form">
+        <p>
+          <label>Customer search</label><br />
+          <input type="text" name="search" id="search" />
+        </p>
+        <p>
+          <button type="submit">Search</button>
+        </p>
+      </form>
+    </div>
+    <div>
+      <span id="response"></span>
+    </div>
+  </body>
 </html>

@@ -2,6 +2,8 @@ const server = require('express')();
 const fs = require('fs');
 // node-fetch ^3.0 doesn't allow require
 const fetch = require('cross-fetch');
+const createCustomers = require('./createCustomers');
+const getCustomers = require('./getCustomers');
 
 /*
 check if customer json file exists
@@ -13,56 +15,48 @@ when user submits search, search module executes
 
 */
 
-const generateNames = async () => {
+const base64 = (data) => {
+  let buffer = new Buffer(data);
+  return buffer.toString('base64');
+};
 
-  let countOfNames = 20;
+let auth = base64(`${process.env.DWOLLA_KEY}:${process.env.DWOLLA_SECRET}`);
 
-  let emptyArr = Array(countOfNames * 3 * 2).fill();
-
-  let randomChar = () =>
-    String.fromCharCode(+(Math.random() * 26).toFixed(0) + 96);
-
-  let randomLetters = emptyArr.map(() => randomChar());
-
-  let stringArr = new Array(40).fill();
-
-  stringArr.forEach((el, idx) => {
-    stringArr[idx] = [];
-    while (stringArr[idx].length < 3) {
-      stringArr[idx].push(randomLetters.pop());
-    }
-  });
-
-
- 
-
-  const corsUrl = ""; // process.env.CORS_URL;
-  const wikiFirstNameUrl = `https://en.wikipedia.org/w/api.php?action=query&list=categorymembers&cmtitle=Category:Given_names&cmtype=page&cmnamespace=0&format=json&cmlimit=1&cmprop=title|sortkey&cmstartsortkeyprefix=`;
-  const wikiLastNameUrl = `https://en.wikipedia.org/w/api.php?action=query&list=categorymembers&cmtitle=Category:Surnames&cmtype=page&cmnamespace=0&format=json&cmlimit=1&cmprop=title|sortkey&cmstartsortkeyprefix=`;
-
-
-  let wikiResponses = await Promise.allSettled(stringArr.splice(0,20).map(sortStart => fetch(
-    `${corsUrl}${wikiFirstNameUrl}${sortStart.join("")}`,
-     {headers: {"API-User-Agent": "Bot/GitHub.com/israelgonzalezb"}},
-  ).then((res) => res.text()).catch(err => console.log("!!!", err))));
- return wikiResponses//.map(name => name.value.query.categorymembers[0].title);
-
-}
-
-if (!fs.existsSync("./customers.json")) {
-    generateNames().then(res => console.log(res))
+if (!fs.existsSync('./customers.json')) {
+  //generateNames()//.then((res) => console.log(Promise.resolve(res[0].value).then(res => res)));
 }
 
 // Sync prevents the app from serving index early
 const indexFile = fs.readFileSync('./index.html');
-const indexHtml = indexFile.toString();    
-            
-server.get('/', (req, res) => {
-    res
-       .type("html")
-       .send(indexHtml);
-})
+const indexHtml = indexFile.toString();
 
-server.listen(process.env.PORT || 3000, err => {
-	if (err) throw err
-})
+server.get('/', (req, res) => {
+  // if (customers.length === 0) createCustomers();
+  res.type('html').send(indexHtml);
+});
+
+server.get('/customers', async (req, res) => {
+  res.type('json').send(await getCustomers());
+});
+
+server.get('/search/:term', async (req, res) => {
+  const term = encodeURIComponent(req.params.term);
+
+  const response = await fetch(
+    `https://api-sandbox.dwolla.com/customers?search=${term}`,
+    {
+      headers: {
+        'Content-Type': 'application/vnd.dwolla.v1.hal+json',
+        Accept: 'application/vnd.dwolla.v1.hal+json',
+        Authorization: `Bearer ${auth}`,
+      },
+    }
+  );
+  response
+    .then((resp) => res.type('json').send(resp))
+    .catch((err) => console.log(err));
+});
+
+server.listen(process.env.PORT || 3000, (err) => {
+  if (err) throw err;
+});

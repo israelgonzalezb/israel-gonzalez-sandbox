@@ -1,18 +1,16 @@
 {
-  "name": "sandbox challenge",
+  "name": "sandbox-challenge",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "nodemon server.js"
   },
   "author": "Israel Gonzalez-Brooks",
   "license": "MIT",
   "dependencies": {
     "express": "^4.17.1",
     "cross-fetch": "^3.1.4"
-  },
-  "engines": {
-     "node": "17.x"
   }
+
 }
