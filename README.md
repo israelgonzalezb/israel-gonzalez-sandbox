@@ -1,6 +1,6 @@
 ### Readme
 
-This is a simple express app that serves an html page to search Dwolla customers.
+This is a simple express app that serves an HTML page to search Dwolla customers.
 
 1. If you have a Dwolla Sandbox Account, [log in](https://accounts-sandbox.dwolla.com/login). Otherwise, [create an account](https://accounts-sandbox.dwolla.com/sign-up) and follow the verification instructions.
 3. On your [Dashboard](https://dashboard-sandbox.dwolla.com/), click **≡ Menu -> Applications**.
@@ -14,4 +14,7 @@ Install
 Run server
 `yarn start`
 
-The serer runs on port 3000 by default, but you can change that by setting the PORT environment variable.
+The server runs on port 3000 by default. Change that by setting the PORT environment variable.
+
+To create fake customers visit /create. The server then redirects you to the index page.
+
