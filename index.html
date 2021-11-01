@@ -12,10 +12,11 @@
         await fetch(`http://localhost:3000/search/${term}`);
 
       window.onload = function () {
-        var formEl = document.getElementById('form');
-        var searchEl = document.getElementById('search');
+        const formEl = document.getElementById('form');
+        const searchEl = document.getElementById('search');
+        const searchButton = document.getElementById('search-button');
         const responseEl = document.getElementById('response');
-        form.addEventListener('submit', async function (e) {
+        searchButton.addEventListener('onclick', async function (e) {
           e.preventDefault();
           search(searchEl.value).then(
             async (res) => (responseEl.innerText = await res.text())
@@ -31,15 +32,13 @@
       </h3>
     </header>
     <div>
-      <form id="form">
-        <p>
-          <label>Customer search</label><br />
-          <input type="text" name="search" id="search" />
-        </p>
-        <p>
-          <button type="submit">Search</button>
-        </p>
-      </form>
+      <p>
+        <label>Customer search</label><br />
+        <input type="text" name="search" id="search" />
+      </p>
+      <p>
+        <button id="search-button">Search</button>
+      </p>
     </div>
     <div>
       <span id="response"></span>

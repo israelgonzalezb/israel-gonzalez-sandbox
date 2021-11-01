@@ -50,12 +50,12 @@ server.get('/search/:term', async (req, res) => {
         Accept: 'application/vnd.dwolla.v1.hal+json',
         Authorization: `Bearer ${auth}`,
       },
-    }
+    } 
   );
   response
     .then((resp) => res.type('json').send(resp))
     .catch((err) => console.log(err));
-});
+}); 
 
 server.listen(process.env.PORT || 3000, (err) => {
   if (err) throw err;
