@@ -26,7 +26,7 @@ let tokenResponse = fetch('https://api-sandbox.dwolla.com/token', {
   },
   body: `grant_type=client_credentials`,
 }).then(async (res) => {
-  token = (await res.json()).tokenResponse.access_token;
+  token = (await res.json()).access_token;
 });
 
 server.get('/', (req, res) => {
