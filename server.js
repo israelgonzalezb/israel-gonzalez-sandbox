@@ -44,7 +44,7 @@ server.get('/customers', async (req, res) => {
 });
 
 server.get('/create', async (req, res) => {
-  res.type('json').send(await createCustomers(token));
+  await createCustomers(token).then(() => res.redirect("/")).catch(err => res.send(err));
 });
 
 server.get('/search/:term', async (req, res) => {
