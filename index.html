@@ -11,16 +11,55 @@
       const search = async (term) =>
         await fetch(`http://localhost:3000/search/${term}`);
 
-      window.onload = function () {
+      window.onload = async function () {
         const formEl = document.getElementById('form');
         const searchEl = document.getElementById('search');
         const searchButton = document.getElementById('search-button');
         const responseEl = document.getElementById('response');
-        searchButton.addEventListener('onclick', async function (e) {
+
+        const customersTable = `
+        <caption>All Customers</caption>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+        </tr>
+        `;
+
+        const searchTable = `
+        <caption>Search Results</caption>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+        </tr>
+        `;
+
+        await fetch(`http://localhost:3000/customers`).then(async (res) => {
+          const data = await res.json();
+          responseEl.innerHTML = customersTable;
+          data.forEach((user) => {
+            responseEl.innerHTML += `
+                  <tr>
+                    <td>${user.firstName} ${user.lastName}</td>
+                    <td>${user.email}</td>
+                  </tr>
+                  `;
+          });
+        });
+
+        searchButton.addEventListener('click', async function (e) {
           e.preventDefault();
-          search(searchEl.value).then(
-            async (res) => (responseEl.innerText = await res.text())
-          );
+          search(searchEl.value).then(async (res) => {
+            const data = await res.json();
+            responseEl.innerHTML = searchTable;
+            data.forEach((user) => {
+              responseEl.innerHTML += `
+                  <tr>
+                    <td>${user.firstName} ${user.lastName}</td>
+                    <td>${user.email}</td>
+                  </tr>
+                  `;
+            });
+          });
         });
       };
     </script>
@@ -41,7 +80,15 @@
       </p>
     </div>
     <div>
-      <span id="response"></span>
+      <table id="response">
+        <caption id="table-caption">
+          All Customers
+        </caption>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+        </tr>
+      </table>
     </div>
   </body>
 </html>

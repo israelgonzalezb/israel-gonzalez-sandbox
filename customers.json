@@ -1,11 +1,11 @@
 {
   "customers": [
     {
-      "id": 1,
+      
       "firstName": "Leanne",
       "lastName": "Graham",
-      "email": "l.graham@example.com",
-      "type": "unverified"
+      "email": "lgraham@example.com"
+ 
     },
     {
       "id": 2,

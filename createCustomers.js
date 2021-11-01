@@ -1,30 +1,24 @@
 const fetch = require('cross-fetch');
 const { customers } = require('./customers.json');
+const base64 = require("./base64");
 
-const base64 = (data) => {
-    let buffer = new Buffer(data);
-    return buffer.toString('base64');
-}
-const createCustomers = async (data = customers) => {
-    return {msg: "hello!"}
-    let auth = base64(`${process.env.DWOLLA_KEY}:${process.env.DWOLLA_SECRET}`)
-  //data.forEach((customer) => {
+const createCustomers = async (token, data = customers) => {
+  let auth = base64(`${process.env.DWOLLA_KEY}:${process.env.DWOLLA_SECRET}`);
+  data.forEach((customer) => {
     fetch('https://api-sandbox.dwolla.com/customers', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/vnd.dwolla.v1.hal+json',
+        'Content-Type': 'application/json',
         Accept: 'application/vnd.dwolla.v1.hal+json',
-        Authorization:
-          `Bearer ${auth}`,
+        Authorization: `Bearer ${token}`,
+        'content-length': customers[1].length,
       },
-      body: JSON.stringify(customers[0]),
+      body: JSON.stringify(customers[1]),
     })
-      .then((res) => res.json())
+      .then((res) => res.text())
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
-  //});
-  
-  console.log(customers);
+  });
 };
 
 module.exports = createCustomers;
