@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://fonts.xz.style/serve/inter.css" />
     <script type="text/javascript">
       const search = async (term) =>
-        await fetch(`http://localhost:3000/search/${term}`);
+        await fetch(`${window.location.href}/search/${term}`);
 
       window.onload = async function () {
         const formEl = document.getElementById('form');
@@ -33,7 +33,7 @@
         </tr>
         `;
 
-        await fetch(`http://localhost:3000/customers`).then(async (res) => {
+        await fetch(`${window.location.href}/customers`).then(async (res) => {
           const data = await res.json();
           responseEl.innerHTML = customersTable;
           data.forEach((user) => {

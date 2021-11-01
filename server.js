@@ -17,7 +17,7 @@ if (!fs.existsSync('./customers.json')) {
 const indexFile = fs.readFileSync('./index.html');
 const indexHTML = indexFile.toString();
 
-let token = "";
+let token = '';
 let tokenResponse = fetch('https://api-sandbox.dwolla.com/token', {
   method: 'POST',
   headers: {
@@ -26,11 +26,8 @@ let tokenResponse = fetch('https://api-sandbox.dwolla.com/token', {
   },
   body: `grant_type=client_credentials`,
 }).then(async (res) => {
-  
-  token = (await res.json()).error//.tokenResponse.access_token;
-  console.log('----->!', token)
+  token = (await res.json()).tokenResponse.access_token;
 });
-
 
 server.get('/', (req, res) => {
   res.type('html').send(indexHTML);
