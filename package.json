@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "node server.js"
   },
   "author": "Israel Gonzalez-Brooks",
   "license": "MIT",
@@ -13,7 +13,7 @@
     "cross-fetch": "^3.1.4"
   },
   "engines": {
-    "node": "^17.x"
+    "node": "17.x"
   }
 
 }
